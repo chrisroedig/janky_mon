@@ -19,6 +19,7 @@ LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
+SCARY          = 0.2     # fraction of scared pixels
 
 
 class Spark(object):
@@ -28,10 +29,11 @@ class Spark(object):
   def reset(self, imax=60):
     self.start_time = datetime.now()
     self.age_offset = random.random()
-    self.amplitude = 0.3 + 0.68*random.random()
+    self.amplitude = 0.6 + 0.38*random.random()
     self.position = int(imax*random.random())
-    self.time_constant=1.0*random.random()
-    self.mix = int(100*random.random())
+    self.time_constant = 0.5 + 1.0*random.random()
+    self.mix = int(255*random.random())
+    self.scared = int(SCARY > random.random())
 
   @property
   def age(self):
@@ -39,7 +41,7 @@ class Spark(object):
 
   @property
   def current_amplitude(self):
-    return 0.02+self.amplitude*(math.e**(-self.age/self.time_constant))
+    return self.amplitude*(math.e**(-self.age/self.time_constant))
   
   @property
   def pixel_data(self):
@@ -47,7 +49,7 @@ class Spark(object):
 	self.reset()
     return (
 	self.position,
-	5,
+	int(255*self.scared*self.current_amplitude),
         int(self.mix*self.current_amplitude),
         int((255-self.mix)*self.current_amplitude)
 	)
@@ -63,7 +65,7 @@ def get_strip():
 def sparkle():
   strip = get_strip()
   for i in range(60):
-    strip.setPixelColorRGB(i, 0, 0, 20)
+    strip.setPixelColorRGB(i, 0, 0, 0)
   strip.show()
 
   sparks = [Spark() for i in range(20)]
