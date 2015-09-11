@@ -1,5 +1,6 @@
 #!/bin/sh
 
+git fetch
 LOCAL=$(git rev-parse HEAD )
 REMOTE=$(git rev-parse @{u})
 echo $LOCAL
