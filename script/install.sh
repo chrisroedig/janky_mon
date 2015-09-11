@@ -8,7 +8,7 @@ sudo scons
 
 echo 'setting up python bindings for rpi_ws281x...'
 cd python
-python setup.py install
+sudo python setup.py install
 
 cd ../../
 

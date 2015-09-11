@@ -1,6 +1,6 @@
 #!/bin/sh
 
-LOCAL=$(git rev-parse @)
+LOCAL=$(git rev-parse HEAD )
 REMOTE=$(git rev-parse @{u})
 BASE=$(git merge-base @ @{u})
 
