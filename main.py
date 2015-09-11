@@ -1,10 +1,4 @@
-# NeoPixel library strandtest example
-# Author: Tony DiCola (tony@tonydicola.com)
-#
-# Direct port of the Arduino NeoPixel library strandtest example.  Showcases
-# various animations on a strip of NeoPixels.
-
-from neopixel import *
+import neopixel
 
 # LED strip configuration:
 
@@ -21,8 +15,10 @@ def get_strip():
     st = neopixel.Adafruit_NeoPixel(
         LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
     st.begin()
+    return st
 
 if __name__ == '__main__':
     st = get_strip()
     for i in range(LED_COUNT):
-        st.setPixelColor(i, 255, 0, 0, 0)
+        st.setPixelColorRGB(i, 0, 80, 0 )
+    st.show()
