@@ -10,6 +10,7 @@ from datetime import datetime
 from datetime import timedelta
 import random
 import math
+import signal
 
 # LED strip configuration:
 
