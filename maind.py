@@ -3,6 +3,7 @@ import sys
 import os
 import time
 import atexit
+import logging
 from signal import SIGTERM
 
 
@@ -12,7 +13,7 @@ class Daemon:
 
         Usage: subclass the Daemon class and override the run() method
         """
-        def __init__(self, pidfile='janky_main', stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
+        def __init__(self, pidfile='janky_main.pid', stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
                 self.stdin = stdin
                 self.stdout = stdout
                 self.stderr = stderr
@@ -34,7 +35,7 @@ class Daemon:
                         sys.exit(1)
 
                 # decouple from parent environment
-                os.chdir("/")
+                # os.chdir("/")
                 os.setsid()
                 os.umask(0)
 
@@ -61,7 +62,9 @@ class Daemon:
                 # write pidfile
                 atexit.register(self.delpid)
                 pid = str(os.getpid())
-                file(self.pidfile,'w+').write("%s\n" % pid)
+                ff = open(self.pidfile,'w+')
+		ff.write("%s\n" % pid)
+		ff.close()
 
         def delpid(self):
                 os.remove(self.pidfile)
@@ -132,14 +135,21 @@ class Daemon:
                 main.run()
 
 
-if __name__ =='__main__':
+
+if __name__ == '__main__':
     jdaemon = Daemon()
+    if sys.argv[1] == 'start':
+        print 'starting'
+	jdaemon.start()
 
-    if sys.argv[0] == 'start':
-        return jdaemon.start()
+    elif sys.argv[1] == 'stop':
+	print 'stopping'
+        jdaemon.stop()
 
-    if sys.argv[0] == 'stop':
-        return jdaemon.stop()
+    elif sys.argv[1] == 'restart':
+	print 'restarting'
+        jdaemon.restart()
+    else:
+        print 'WUT?!'
 
-    if sys.argv[0] == 'restart':
-        return jdaemon.restart()
+

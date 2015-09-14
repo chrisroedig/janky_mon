@@ -14,4 +14,4 @@ echo "installing...."
 ./script/install.sh
 
 echo "restarting some janky stuff"
-python -m maind restart
+python maind.py restart

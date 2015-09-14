@@ -29,15 +29,17 @@ def stop():
 def run():
     global STOP_FLAG
     signal.signal(signal.SIGTERM, stop)
+    st = get_strip()
+    
     while not STOP_FLAG:
-        st = get_strip()
         for i in range(LED_COUNT):
             st.setPixelColorRGB(i, 0, 80, 0)
         st.show()
-        time.sleep(3.0)
+        time.sleep(.5)
         for i in range(LED_COUNT):
             st.setPixelColorRGB(i, 0, 0, 80)
         st.show()
+        time.sleep(.5)
 
 
 if __name__ == '__main__':
