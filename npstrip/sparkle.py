@@ -20,7 +20,7 @@ LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
-SCARY          = 0.2     # fraction of scared pixels
+SCARY          = 0.1     # fraction of scared pixels
 
 
 class Spark(object):
@@ -32,7 +32,7 @@ class Spark(object):
     self.age_offset = random.random()
     self.amplitude = 0.6 + 0.38*random.random()
     self.position = int(imax*random.random())
-    self.time_constant = 0.5 + 1.0*random.random()
+    self.time_constant = 0.2 + 1.0*random.random()
     self.mix = int(255*random.random())
     self.scared = int(SCARY > random.random())
 
@@ -51,8 +51,8 @@ class Spark(object):
     return (
 	self.position,
 	int(255*self.scared*self.current_amplitude),
-        int(self.mix*self.current_amplitude),
-        int((255-self.mix)*self.current_amplitude)
+        int(self.mix*self.current_amplitude*(1.0-self.scared)),
+        int((255-self.mix)*self.current_amplitude*(1.0-self.scared))
 	)
 
 # Main program logic follows:
