@@ -10,8 +10,8 @@ REMOTE=$(git rev-parse @{u})
 echo "new master detected ($LOCAL -> $REMOTE)!"
 git reset --hard $REMOTE
 
-echo "installing...."
-./script/install.sh
+# echo "installing...."
+# ./script/install.sh
 
 echo "restarting some janky stuff"
 python maind.py restart
