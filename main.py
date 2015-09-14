@@ -1,5 +1,6 @@
+import signal
 import neopixel
-
+import time
 # LED strip configuration:
 
 LED_COUNT = 60      # Number of LED pixels.
@@ -10,6 +11,8 @@ LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT = False   # True to invert the signal
 SCARY = 0.2     # fraction of scared pixels
 
+STOP_FLAG = False
+
 
 def get_strip():
     st = neopixel.Adafruit_NeoPixel(
@@ -17,8 +20,26 @@ def get_strip():
     st.begin()
     return st
 
+
+def stop():
+    global STOP_FLAG
+    STOP_FLAG = True
+
+
+def run():
+    global STOP_FLAG
+    signal.signal(signal.SIGTERM, stop)
+    while not STOP_FLAG:
+        st = get_strip()
+        for i in range(LED_COUNT):
+            st.setPixelColorRGB(i, 0, 80, 0)
+        st.show()
+        time.sleep(3.0)
+        for i in range(LED_COUNT):
+            st.setPixelColorRGB(i, 0, 0, 80)
+        st.show()
+
+
 if __name__ == '__main__':
-    st = get_strip()
-    for i in range(LED_COUNT):
-        st.setPixelColorRGB(i, 0, 80, 0 )
-    st.show()
+    print 'ctrl-c to stop this janky crap'
+    run()
