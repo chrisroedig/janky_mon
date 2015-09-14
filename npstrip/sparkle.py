@@ -32,7 +32,7 @@ class Spark(object):
     self.age_offset = random.random()
     self.amplitude = 0.6 + 0.38*random.random()
     self.position = int(imax*random.random())
-    self.time_constant = 0.5 + 1.0*random.random()
+    self.time_constant = 2.0 + 1.0*random.random()
     self.mix = int(255*random.random())
     self.scared = int(SCARY > random.random())
 
