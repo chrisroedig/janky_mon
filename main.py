@@ -1,5 +1,5 @@
 import signal
-import neopixel
+import npstrip.sparkle
 import time
 # LED strip configuration:
 
@@ -22,24 +22,11 @@ def get_strip():
 
 
 def stop():
-    global STOP_FLAG
-    STOP_FLAG = True
+    npstrip.sparkle.stop()
 
 
 def run():
-    global STOP_FLAG
-    signal.signal(signal.SIGTERM, stop)
-    st = get_strip()
-    
-    while not STOP_FLAG:
-        for i in range(LED_COUNT):
-            st.setPixelColorRGB(i, 0, 80, 0)
-        st.show()
-        time.sleep(.5)
-        for i in range(LED_COUNT):
-            st.setPixelColorRGB(i, 0, 0, 80)
-        st.show()
-        time.sleep(.5)
+    npstrip.sparkle.run()
 
 
 if __name__ == '__main__':
