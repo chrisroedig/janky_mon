@@ -32,7 +32,8 @@ LETTER_CODE = {
         '0': '-----',  '1': '.----',  '2': '..---',
         '3': '...--',  '4': '....-',  '5': '.....',
         '6': '-....',  '7': '--...',  '8': '---..',
-        '9': '----.'
+        '9': '----.',
+        ' ': '',
         }
 
 DASH_LENGTH = 6
@@ -67,8 +68,10 @@ def convert_word(msg):
 
 
 def window_word(msg, offset):
-    code_arr = convert_word(msg)
-    output = code_arr[0:LED_COUNT]
+    msg_code_arr = convert_word(msg)
+    code_arr = ([False]*LED_COUNT) + msg_code_arr + ([False]*LED_COUNT)
+    offset = offset % (len(msg_code_arr)+LED_COUNT)
+    output = code_arr[offset:LED_COUNT+offset]
     return output
 
 
@@ -93,8 +96,8 @@ def run():
     for i in range(60):
         strip.setPixelColorRGB(i, 0, 0, 0)
     strip.show()
-
-    pixellate_word('hello world', 0, strip)
-
+    offset = 0
     while not STOP_FLAG:
+        pixellate_word('hello world', offset, strip)
+        offset += 1
         time.sleep(0.1)
