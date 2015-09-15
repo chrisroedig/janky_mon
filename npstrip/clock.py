@@ -46,7 +46,7 @@ def run():
 
     while not STOP_FLAG:
         now = datetime.now()
-        useconds = now.microsecond+(now.second+60*(now.minute%3))*1000*1000
+        useconds = now.microsecond+(now.second+60*(now.minute%3))*1000*1000.0
         for i in range(60):
             strip.setPixelColorRGB(i,
                 xform((i+1)*useconds, 0),
