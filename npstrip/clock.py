@@ -16,9 +16,9 @@ LED_COUNT      = 60      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
-LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
+LED_BRIGHTNESS = 128     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
-PERIOD         = 3*60*1000*1000
+PERIOD         = 3*10*1000*1000
 
 def get_strip():
 	# Create NeoPixel object with appropriate configuration.
@@ -34,7 +34,7 @@ def stop():
     STOP_FLAG = True
 
 def xform(theta, phi):
-    return int(255*0.5*(1.+math.sin(2*3.14159*(theta/PERIOD+phi))))
+    return int(LED_BRIGHTNESS*0.5*(1.+math.cos(2*3.14159*(theta/PERIOD+phi))))
 
 def run():
     global STOP_FLAG
