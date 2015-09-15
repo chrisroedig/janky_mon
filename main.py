@@ -1,5 +1,5 @@
 import signal
-import npstrip.sparkle
+import npstrip.clock
 import time
 # LED strip configuration:
 
@@ -9,7 +9,6 @@ LED_FREQ_HZ = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA = 5       # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT = False   # True to invert the signal
-SCARY = 0.2     # fraction of scared pixels
 
 STOP_FLAG = False
 
@@ -22,11 +21,11 @@ def get_strip():
 
 
 def stop():
-    npstrip.sparkle.stop()
+    npstrip.clock.stop()
 
 
 def run():
-    npstrip.sparkle.run()
+    npstrip.clock.run()
 
 
 if __name__ == '__main__':
