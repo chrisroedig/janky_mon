@@ -78,7 +78,7 @@ def window_word(msg, offset):
 def pixellate_word(msg, offset, strip):
     output = []
     for i, pixel in enumerate(window_word(msg, offset)):
-        strip.setPixelColorRGB(i, 0, 10, 5+100*pixel)
+        strip.setPixelColorRGB(i, 10, 10, 5+100*pixel)
     strip.show()
 
 STOP_FLAG = False
@@ -100,4 +100,4 @@ def run():
     while not STOP_FLAG:
         pixellate_word('hello world', offset, strip)
         offset += 1
-        time.sleep(0.1)
+        time.sleep(0.05)
