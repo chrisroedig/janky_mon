@@ -78,7 +78,7 @@ def window_word(msg, offset):
 def pixellate_word(msg, offset, strip):
     output = []
     for i, pixel in enumerate(window_word(msg, offset)):
-        strip.setPixelColorRGB(i, 20+100*pixel, 0, 0)
+        strip.setPixelColorRGB(i, 0, 10, 5+100*pixel)
     strip.show()
 
 STOP_FLAG = False
