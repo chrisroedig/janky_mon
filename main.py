@@ -22,11 +22,11 @@ def get_strip():
 
 
 def stop():
-    npstrip.clock.stop()
+    npstrip.morse.stop()
 
 
 def run():
-    npstrip.clock.run()
+    npstrip.morse.run()
 
 
 if __name__ == '__main__':
