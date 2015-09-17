@@ -13,9 +13,9 @@ LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 128     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 PERIOD         = 3*10*1000*1000
-GRAVITY = 10.0
-FLOOR = 1.0
-BOUNCE = 0.9
+GRAVITY = 15.0
+FLOOR = 2.0
+BOUNCE = 0.8
 
 class Ball(object):
     def __init__(self, v_init = None):
@@ -23,8 +23,8 @@ class Ball(object):
 
     def reset(self, v_init = None):
         if v_init is None:
-            self.v_init = 35.0
-        elif v_init > 5:
+            self.v_init = 55.0
+        elif v_init > 10:
             self.v_init = v_init
         else:
             self.v_init = 45.0
@@ -39,7 +39,6 @@ class Ball(object):
     def pos(self):
         pos = self.v_init * self.time - GRAVITY * self.time ** 2
         if pos < FLOOR:
-            print 'BOUNCE'
             self.reset(self.v_init*BOUNCE)
         return pos
 
@@ -76,10 +75,3 @@ def run():
         strip.show()
         time.sleep(0.05)
 
-if __name__ == '__main__':
-    b = Ball()
-    def pp(x): print(x)
-    for i in range(0,1000):
-        for i in range(60):
-            print b.pixel(i)
-        time.sleep(0.1)
