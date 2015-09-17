@@ -69,6 +69,7 @@ def run():
     for i in range(60):
         strip.setPixelColorRGB(i, 0, 0, 0)
     strip.show()
+    b = Ball()
     while not STOP_FLAG:
         for i in range(60):
             strip.setPixelColorRGB(*b.pixel(i))
