@@ -1,6 +1,7 @@
 import signal
 import npstrip.clock
 import npstrip.sparkle
+import npstrip.bouncy
 import npstrip.morse
 import time
 # LED strip configuration:
@@ -23,11 +24,11 @@ def get_strip():
 
 
 def stop():
-    npstrip.sparkle.stop()
+    npstrip.bouncy.stop()
 
 
 def run():
-    npstrip.sparkle.run()
+    npstrip.bouncy.run()
 
 
 if __name__ == '__main__':
