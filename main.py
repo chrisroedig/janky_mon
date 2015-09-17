@@ -1,5 +1,6 @@
 import signal
 import npstrip.clock
+import npstrip.sparkle
 import npstrip.morse
 import time
 # LED strip configuration:
