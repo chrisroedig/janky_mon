@@ -3,7 +3,16 @@ import datetime
 import time
 import signal
 
-LED_COUNT      = 60
+from neopixel import *
+# LED strip configuration:
+
+LED_COUNT      = 60      # Number of LED pixels.
+LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
+LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
+LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
+LED_BRIGHTNESS = 128     # Set to 0 for darkest and 255 for brightest
+LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
+PERIOD         = 3*10*1000*1000
 GRAVITY = 10.0
 FLOOR = 1.0
 BOUNCE = 0.9
@@ -37,6 +46,16 @@ class Ball(object):
     def pixel(self, i):
         pixel=max(0,(3.0-abs(i-self.pos)))/3.0
         return (i, 10, 10, 5 + int(100*pixel))
+
+
+def get_strip():
+	# Create NeoPixel object with appropriate configuration.
+	strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
+	# Intialize the library (must be called once before other functions).
+	strip.begin()
+	return strip
+
+STOP_FLAG = False
 
 def stop():
     global STOP_FLAG
