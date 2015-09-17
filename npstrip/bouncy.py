@@ -1,6 +1,7 @@
 import random
 import datetime
 import time
+import signal
 
 LED_COUNT      = 60
 GRAVITY = 10.0
