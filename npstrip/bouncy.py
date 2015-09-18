@@ -15,7 +15,7 @@ LED_INVERT     = False   # True to invert the signal (when using NPN transistor 
 PERIOD         = 3*10*1000*1000
 GRAVITY = 20.0
 FLOOR = 0.0
-BOUNCE = 0.6
+BOUNCE = 0.9
 
 class Ball(object):
     def __init__(self, v_init = None):
