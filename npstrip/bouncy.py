@@ -27,7 +27,7 @@ class Ball(object):
         elif v_init > 10:
             self.v_init = v_init
         else:
-            self.v_init = 45.0
+            self.v_init = 75.0
         self.color = (255, 0, 0)
         self.t_init = datetime.datetime.now()
 
