@@ -23,7 +23,7 @@ class Ball(object):
 
     def reset(self, v_init = None):
         if v_init is None:
-            self.v_init = 55.0
+            self.v_init = 75.0
         elif v_init > 10:
             self.v_init = v_init
         else:
