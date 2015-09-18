@@ -21,8 +21,8 @@ V_INIT = 4.4
 V_MIN = 0.05
 
 class Ball(object):
-    def __init__(self, v_init = V_INIT):
-        self.reset(v_init=v_init)
+    def __init__(self, v = V_INIT):
+        self.reset(v=v_init)
 
     def reset(self, v = V_INIT):
         if v < V_MIN:
