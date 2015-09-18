@@ -2,6 +2,7 @@ import random
 import datetime
 import time
 import signal
+import colorsys
 
 from neopixel import *
 # LED strip configuration:
@@ -16,19 +17,20 @@ PERIOD         = 3*10*1000*1000
 GRAVITY = 20.0
 FLOOR = 0.0
 BOUNCE = 0.9
+V_INIT = 4.4
+V_MIN = 0.05
 
 class Ball(object):
-    def __init__(self, v_init = None):
+    def __init__(self, v_init = V_INIT):
         self.reset(v_init=v_init)
 
-    def reset(self, v_init = None):
-        if v_init is None:
-            self.v_init = 75.0
-        elif v_init > 10:
-            self.v_init = v_init
+    def reset(self, v = V_INIT):
+        if v < V_MIN:
+            self.v_init = V_INIT
         else:
-            self.v_init = 75.0
-        self.color = (255, 0, 0)
+            self.v_init = v
+        hue = random.random()
+        self.color = tuple([ int(c * 255) for c in colorsys.hsv_to_rgb( hue, 1 , 1 )])
         self.t_init = datetime.datetime.now()
 
     @property
@@ -37,14 +39,14 @@ class Ball(object):
 
     @property
     def pos(self):
-        pos = self.v_init * self.time - GRAVITY * self.time ** 2
+        pos = 60 * (self.v_init * self.time - GRAVITY * self.time ** 2)
         if pos < FLOOR:
             self.reset(self.v_init*BOUNCE)
         return pos
 
     def pixel(self, i):
-        pixel=max(0,(3.0-abs(i-self.pos)))/3.0
-        return (i, 10, 10, 5 + int(100*pixel))
+        val = max(0,(3.0-abs(i-self.pos)))/3.0
+        return (i,)+tuple([int(ch*val) for ch in self.color])
 
 
 def get_strip():
