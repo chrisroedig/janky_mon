@@ -22,16 +22,20 @@ V_MIN = 0.05
 
 class Ball(object):
     def __init__(self, v = V_INIT):
-        self.reset(v)
+        self.reset(0)
+        self.t_root = datetime.datetime.now()
 
     def reset(self, v = V_INIT):
         if v < V_MIN:
             self.v_init = V_INIT
+            self.t_root = datetime.datetime.now()
         else:
             self.v_init = v
-        hue = random.random()
-        self.color = tuple([ int(c * 255) for c in colorsys.hsv_to_rgb( hue, 1 , 1 )])
         self.t_init = datetime.datetime.now()
+
+    @property
+    def global_time(self):
+        return (datetime.datetime.now() - self.t_root).total_seconds()
 
     @property
     def time(self):
@@ -46,6 +50,8 @@ class Ball(object):
 
     def pixel(self, i):
         val = max(0,(3.0-abs(i-self.pos)))/3.0
+        hue = (self.global_time % 10) / 10.0
+        color = tuple([ int(c * 255) for c in colorsys.hsv_to_rgb( hue, 1 , 1 )])
         return (i,)+tuple([int(ch*val) for ch in self.color])
 
 
