@@ -13,7 +13,7 @@ LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 128     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 PERIOD         = 3*10*1000*1000
-GRAVITY = 20.0
+GRAVITY = 40.0
 FLOOR = 0.0
 BOUNCE = 0.9
 
@@ -23,11 +23,11 @@ class Ball(object):
 
     def reset(self, v_init = None):
         if v_init is None:
-            self.v_init = 75.0
+            self.v_init = 100.0
         elif v_init > 10:
             self.v_init = v_init
         else:
-            self.v_init = 75.0
+            self.v_init = 100.0
         self.color = (255, 0, 0)
         self.t_init = datetime.datetime.now()
 
