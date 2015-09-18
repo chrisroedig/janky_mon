@@ -50,7 +50,7 @@ class Ball(object):
 
     def pixel(self, i):
         val = max(0,(3.0-abs(i-self.pos)))/3.0
-        hue = ((self.global_time + 1) % 10) / 10.0
+        hue = 1.0 - ((self.global_time + 1) % 10) / 10.0
         color = tuple([ int(c * 255) for c in colorsys.hsv_to_rgb( hue, 1 , 1 )])
         return (i,)+tuple([int(ch*val) for ch in color])
 
