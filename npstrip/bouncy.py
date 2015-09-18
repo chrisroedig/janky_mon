@@ -39,7 +39,7 @@ class Ball(object):
 
     @property
     def pos(self):
-        pos = 60 * (self.v_init * self.time - GRAVITY * self.time ** 2)
+        pos = 60 * (self.v_init * self.time - 0.5 * GRAVITY * self.time ** 2)
         if pos < FLOOR:
             self.reset(self.v_init*BOUNCE)
         return pos
@@ -75,4 +75,4 @@ def run():
         for i in range(60):
             strip.setPixelColorRGB(*b.pixel(i))
         strip.show()
-        time.sleep(0.01)
+        time.sleep(0.001)
