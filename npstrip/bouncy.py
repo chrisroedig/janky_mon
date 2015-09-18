@@ -13,9 +13,9 @@ LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 128     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 PERIOD         = 3*10*1000*1000
-GRAVITY = 15.0
-FLOOR = 2.0
-BOUNCE = 0.8
+GRAVITY = 20.0
+FLOOR = 0.0
+BOUNCE = 0.6
 
 class Ball(object):
     def __init__(self, v_init = None):
@@ -74,4 +74,3 @@ def run():
             strip.setPixelColorRGB(*b.pixel(i))
         strip.show()
         time.sleep(0.05)
-
