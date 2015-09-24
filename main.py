@@ -1,5 +1,6 @@
 import signal
 import npstrip.clock
+import npstrip.klokk
 import npstrip.sparkle
 import npstrip.bouncy
 import npstrip.morse
@@ -24,11 +25,11 @@ def get_strip():
 
 
 def stop():
-    npstrip.bouncy.stop()
+    npstrip.klokk.stop()
 
 
 def run():
-    npstrip.bouncy.run()
+    npstrip.klokk.run()
 
 
 if __name__ == '__main__':
