@@ -10,8 +10,16 @@ import signal
 class SecondHand(object):
 
     def __init__(self):
-        self.tick_color = (255,255,255)
-        self.column_color = (255,0,0)
+	self.bg_color = (0,0,50)
+        self.tick_color = (255,100,50)
+        self.column_color = (200,50,0)
+
+    @property
+    def bg_pixels(self):
+        pix={}
+        for i in range(60):
+	    pix[i]=self.bg_color
+	return pix
 
     @property
     def tick_pixels(self):
@@ -29,7 +37,8 @@ class SecondHand(object):
 
     @property
     def pixels(self):
-        pix = self.column_pixels
+        pix = self.bg_pixels
+	pix.update(self.column_pixels)
         pix.update(self.tick_pixels)
         return pix
 
@@ -75,7 +84,7 @@ def run():
     while not STOP_FLAG:
         for pos, color in s.pixels.items():
             pxc =tuple([pos]+list(color))
-            strip.setPixelColorRGB(**pxc)
+            strip.setPixelColorRGB(*pxc)
         strip.show()
         time.sleep(.01)
 
