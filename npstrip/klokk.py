@@ -13,6 +13,7 @@ class SecondHand(object):
 	self.bg_color = (0,0,50)
         self.tick_color = (255,100,50)
         self.column_color = (200,50,0)
+        self.minute_color = (0,255,0)
 
     @property
     def bg_pixels(self):
@@ -36,10 +37,18 @@ class SecondHand(object):
         return pix
 
     @property
+    def minute_pixels(self):
+        minute = datetime.now().minute
+        pix = {}
+        pix[minute] = self.minute_color
+        return pix
+
+    @property
     def pixels(self):
         pix = self.bg_pixels
-	pix.update(self.column_pixels)
+	    pix.update(self.column_pixels)
         pix.update(self.tick_pixels)
+        pix.update(self.minute_pixels)
         return pix
 
     @property
