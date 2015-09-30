@@ -8,7 +8,7 @@ import renderers.led as active_renderer
 import scenes.klokk as klokk
 import scenes.bouncy as bouncy
 import scenes.composite as composite
-UPDATE_INTERVAL = 0.1
+UPDATE_INTERVAL = 0.01
 
 def stop():
     global STOP_THE_SHOW
