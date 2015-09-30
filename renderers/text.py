@@ -33,8 +33,8 @@ class Renderer(base.Renderer):
         if r > g and r > b:
             return Back.RED
         if g > r and g > b:
-            return Back.BLUE
-        return Back.GREEN
+            return Back.GREEN
+        return Back.BLUE
 
     def flip(self):
         for position in range(self.columns):

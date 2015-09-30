@@ -5,7 +5,9 @@ from datetime import datetime
 
 # Imports and settings to control the show
 import renderers.text as active_renderer
-import scenes.klokk as active_scene
+import scenes.klokk as klokk
+import scenes.bouncy as bouncy
+import scenes.composite as composite
 UPDATE_INTERVAL = 0.1
 
 def stop():
@@ -18,7 +20,7 @@ def run():
 
     signal.signal(signal.SIGTERM, stop)
 
-    scene = active_scene.Scene()
+    scene = composite.Scene([ klokk.Scene(), bouncy.Scene() ])
     renderer = active_renderer.Renderer()
 
     renderer.reset()

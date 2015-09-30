@@ -31,7 +31,7 @@ class Scene(object):
             if trail_start <= i <= trail_end:
                 rgb = (0, renderer.max_intensity, 0)
             if dot_start <= i <= dot_end:
-                rgb = (renderer.max_intensity, 0, 0)
+                rgb = (0, 0, renderer.max_intensity)
             renderer.set_pixel(i, rgb)
 
     def calculate_time_delta(self, moment):
