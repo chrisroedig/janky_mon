@@ -39,7 +39,8 @@ class Scene(object):
     def position(self, moment, pixels):
         sec = moment.second
         usec = moment.microsecond
-        return self.scale_to_pixels(60 - int((60.0 - sec)*usec/1.0e6), pixels)
+        pos = self.scale_to_pixels(60 - int((60.0 - sec)*usec/1.0e6), pixels)
+        return min(len(pixels) - 1, pos)
 
     def scale_to_pixels(self, value, pixels):
         """
