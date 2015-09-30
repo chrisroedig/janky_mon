@@ -24,6 +24,12 @@ class Renderer(base.Renderer):
 
     def pick_closest_color(self, rgb):
         r, g, b = rgb
+        if r == g and g == b:
+            if r == self.max_intensity:
+                return Back.WHITE
+            if r == 0:
+                return Back.BLACK
+            return Back.GREY
         if r > g and r > b:
             return Back.RED
         if g > r and g > b:

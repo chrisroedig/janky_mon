@@ -1,84 +1,65 @@
-import random
-import datetime
-import time
-import signal
-import colorsys
 
-from neopixel import *
-# LED strip configuration:
+class Scene(object):
+    def __init__(self):
+        self.velocity_init = 4.4
+        self.velocity_min = 0.05
+        self.bounce_init = 0.75
 
-LED_COUNT      = 60      # Number of LED pixels.
-LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
-LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
-LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
-LED_BRIGHTNESS = 128     # Set to 0 for darkest and 255 for brightest
-LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
-PERIOD         = 3*10*1000*1000
-GRAVITY = 9.8
-FLOOR = 0.0
-BOUNCE = 0.9
-V_INIT = 4.4
-V_MIN = 0.05
+        self.excitement_factor = 4
+        self.gravity = 9.8
+        self.dot_size = 2
 
-class Ball(object):
-    def __init__(self, v = V_INIT):
-        self.reset(0)
-        self.t_root = datetime.datetime.now()
+        self.velocity = self.velocity_init
+        self.bounce = self.bounce_init
+        self.position = 0
+        self.moment = None
 
-    def reset(self, v = V_INIT):
-        if v < V_MIN:
-            self.v_init = V_INIT
-            self.t_root = datetime.datetime.now()
-        else:
-            self.v_init = v
-        self.t_init = datetime.datetime.now()
+    def render_to(self, renderer, moment):
+        time_delta = self.calculate_time_delta(moment) * self.excitement_factor
+        previous_position = self.position
+        self.moment = moment
 
-    @property
-    def global_time(self):
-        return (datetime.datetime.now() - self.t_root).total_seconds()
+        self.adjust_state_for_time_delta(time_delta)
+        self.handle_bounce()
+        self.handle_reset()
 
-    @property
-    def time(self):
-        return (datetime.datetime.now() - self.t_init).total_seconds()
+        trail_start, trail_end = self.calculate_trail(previous_position)
+        dot_start, dot_end = (self.position, self.position + self.dot_size)
 
-    @property
-    def pos(self):
-        pos = 60 * (self.v_init * self.time - 0.5 * GRAVITY * self.time ** 2)
-        if pos < FLOOR:
-            self.reset(self.v_init*BOUNCE)
-        return pos
+        for i in range(renderer.pixel_count):
+            rgb = (0, 0, 0)
+            if trail_start <= i <= trail_end:
+                rgb = (0, renderer.max_intensity, 0)
+            if dot_start <= i <= dot_end:
+                rgb = (renderer.max_intensity, 0, 0)
+            renderer.set_pixel(i, rgb)
 
-    def pixel(self, i):
-        val = max(0,(3.0-abs(i-self.pos)))/3.0
-        hue = 1.0 - ((self.global_time + 1) % 10) / 10.0
-        color = tuple([ int(c * 255) for c in colorsys.hsv_to_rgb( hue, 1 , 1 )])
-        return (i,)+tuple([int(ch*val) for ch in color])
+    def calculate_time_delta(self, moment):
+        if self.moment is None:
+            return 0
+        interval = moment - self.moment
+        return interval.seconds + interval.microseconds/10e6
 
+    def adjust_state_for_time_delta(self, time_delta):
+        if time_delta > 0:
+            position_delta = int((self.velocity * 100) * (time_delta * 100)/100)
+            velocity_delta = self.gravity * time_delta
+            self.position = max(0, self.position + position_delta)
+            self.velocity = self.velocity - velocity_delta
 
-def get_strip():
-	# Create NeoPixel object with appropriate configuration.
-	strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
-	# Intialize the library (must be called once before other functions).
-	strip.begin()
-	return strip
+    def handle_bounce(self):
+        if self.velocity < 0 and self.position == 0:
+            self.velocity = abs(self.velocity) * self.bounce
+            self.bounce = self.bounce - self.bounce * 0.1
 
-STOP_FLAG = False
+    def handle_reset(self):
+        if self.position == 0 and self.velocity < self.velocity_min:
+            self.velocity = self.velocity_init
+            self.bounce = self.bounce_init
 
-def stop():
-    global STOP_FLAG
-    STOP_FLAG = True
+    def calculate_trail(self, previous_position):
+        trail_length = int(abs(self.position - previous_position) * abs(self.velocity)/self.velocity_init)
+        if previous_position <= self.position:
+            return (self.position - trail_length, self.position)
+        return (self.position, self.position + trail_length)
 
-
-def run():
-    global STOP_FLAG
-    signal.signal(signal.SIGTERM, stop)
-    strip = get_strip()
-    for i in range(60):
-        strip.setPixelColorRGB(i, 0, 0, 0)
-    strip.show()
-    b = Ball()
-    while not STOP_FLAG:
-        for i in range(60):
-            strip.setPixelColorRGB(*b.pixel(i))
-        strip.show()
-        time.sleep(0.001)
