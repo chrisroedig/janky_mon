@@ -1,36 +1,34 @@
 import signal
-import npstrip.clock
-import npstrip.klokk
-import npstrip.sparkle
-import npstrip.bouncy
-import npstrip.morse
 import time
-# LED strip configuration:
 
-LED_COUNT = 60      # Number of LED pixels.
-LED_PIN = 18      # GPIO pin connected to the pixels (must support PWM!).
-LED_FREQ_HZ = 800000  # LED signal frequency in hertz (usually 800khz)
-LED_DMA = 5       # DMA channel to use for generating signal (try 5)
-LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
-LED_INVERT = False   # True to invert the signal
+from datetime import datetime
 
-STOP_FLAG = False
-
-
-def get_strip():
-    st = neopixel.Adafruit_NeoPixel(
-        LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
-    st.begin()
-    return st
-
+# Imports and settings to control the show
+import renderers.led as active_renderer
+import scenes.klokk as klokk
+import scenes.bouncy as bouncy
+import scenes.composite as composite
+UPDATE_INTERVAL = 0.1
 
 def stop():
-    npstrip.klokk.stop()
-
+    global STOP_THE_SHOW
+    STOP_THE_SHOW = True
 
 def run():
-    npstrip.klokk.run()
+    global STOP_THE_SHOW
+    STOP_THE_SHOW = False
 
+    signal.signal(signal.SIGTERM, stop)
+
+    scene = composite.Scene([klokk.Scene(), bouncy.Scene()])
+    renderer = active_renderer.Renderer()
+
+    renderer.reset()
+
+    while not STOP_THE_SHOW:
+        scene.render_to(renderer, datetime.now())
+        renderer.flip()
+        time.sleep(UPDATE_INTERVAL)
 
 if __name__ == '__main__':
     print 'ctrl-c to stop this janky crap'
