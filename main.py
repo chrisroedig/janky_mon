@@ -4,9 +4,9 @@ import time
 from datetime import datetime
 
 # Imports and settings to control the show
-import renderers.led as active_renderer
+import renderers.text as active_renderer
 import scenes.klokk as active_scene
-UPDATE_INTERVAL = 0.1
+UPDATE_INTERVAL = 1
 
 def stop():
     global STOP_THE_SHOW
