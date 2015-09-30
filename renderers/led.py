@@ -30,7 +30,7 @@ class Renderer(base.Renderer):
     def set_pixel(self, position, rgb):
         self.strip.setPixelColorRGB(position, *rgb)
 
-    def flip():
+    def flip(self):
         self.strip.show()
 
 
