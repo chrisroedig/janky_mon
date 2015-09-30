@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 
 # Imports and settings to control the show
-import renderers.text as active_renderer
+import renderers.led as active_renderer
 import scenes.klokk as klokk
 import scenes.bouncy as bouncy
 import scenes.composite as composite
@@ -20,7 +20,7 @@ def run():
 
     signal.signal(signal.SIGTERM, stop)
 
-    scene = composite.Scene([ klokk.Scene(), bouncy.Scene() ])
+    scene = composite.Scene([klokk.Scene(), bouncy.Scene()])
     renderer = active_renderer.Renderer()
 
     renderer.reset()
