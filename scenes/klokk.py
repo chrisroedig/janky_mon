@@ -5,7 +5,7 @@ class Scene(object):
     Keeping time with drips and such
     """
     def __init__(self):
-        self.bg_color = (0,0,50)
+        self.bg_color = (0,0,0)
         self.tick_color = (255,100,50)
         self.column_color = (200,50,0)
         self.minute_color = (0,255,0)
