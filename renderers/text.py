@@ -15,6 +15,10 @@ class Renderer(base.Renderer):
     def pixel_count(self):
         return self.columns
 
+    @property
+    def max_intensity(self):
+        return 100
+
     def set_pixel(self, position, rgb):
         self.buffer[position] = self.pick_closest_color(rgb)
 

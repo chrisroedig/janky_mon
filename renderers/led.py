@@ -15,12 +15,17 @@ class Renderer(base.Renderer):
             led_invert     = False,   # True to invert the signal (when using NPN transistor level shift)
             period         = 3*10*1000*1000):
         self.led_count = led_count
+        self.led_brightness = led_brightness
         self.strip = Adafruit_NeoPixel(led_count, led_pin, led_freq_hz, led_dma, led_invert, led_brightness)
         self.strip.begin()
 
     @property
     def pixel_count(self):
         return self.led_count
+
+    @property
+    def max_intensity(self):
+        return self.led_brightness
 
     def set_pixel(self, position, rgb):
         self.strip.setPixelColorRGB(position, *rgb)
