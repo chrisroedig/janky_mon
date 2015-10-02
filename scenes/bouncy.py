@@ -1,17 +1,17 @@
 
 class Scene(object):
     def __init__(self):
-        self.velocity_init = 4.4
-        self.velocity_min = 0.05
-        self.bounce_init = 0.75
+        self.velocity_init = 400.0
+        self.velocity_min = 3.0
+        self.bounce_init = 0.85
 
-        self.excitement_factor = 4
-        self.gravity = 9.8
+        self.excitement_factor = 4.0
+        self.gravity = 980.0
         self.dot_size = 2
 
         self.velocity = self.velocity_init
         self.bounce = self.bounce_init
-        self.position = 0
+        self.position = 0.0
         self.moment = None
 
     def render_to(self, renderer, moment):
@@ -42,7 +42,7 @@ class Scene(object):
 
     def adjust_state_for_time_delta(self, time_delta):
         if time_delta > 0:
-            position_delta = int((self.velocity * 100) * (time_delta * 100)/100)
+            position_delta = self.velocity * time_delta
             velocity_delta = self.gravity * time_delta
             self.position = max(0, self.position + position_delta)
             self.velocity = self.velocity - velocity_delta
@@ -58,7 +58,7 @@ class Scene(object):
             self.bounce = self.bounce_init
 
     def calculate_trail(self, previous_position):
-        trail_length = int(abs(self.position - previous_position) * abs(self.velocity)/self.velocity_init)
+        trail_length = 3.14 * self.dot_size * abs(self.velocity)/self.velocity_init - self.dot_size
         if previous_position <= self.position:
             return (self.position - trail_length, self.position)
         return (self.position, self.position + trail_length)
