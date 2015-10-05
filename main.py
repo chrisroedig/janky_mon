@@ -3,7 +3,7 @@ import signal
 from datetime import datetime
 
 # Imports and settings to control the show
-import renderers.text as active_renderer
+import renderers.led as active_renderer
 import scenes.klokk as klokk
 import scenes.bouncy as bouncy
 import scenes.composite as composite
