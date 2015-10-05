@@ -1,6 +1,6 @@
-from neopixel import *
-
 import base
+
+from neopixel import *
 
 class Renderer(base.Renderer):
     """
