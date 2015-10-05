@@ -24,6 +24,7 @@ def run():
     def update_scene():
         scene.render_to(renderer, datetime.now())
         renderer.flip()
+        renderer.reset()
 
     renderer.drive(update_scene, UPDATE_INTERVAL)
 

@@ -42,7 +42,6 @@ class Renderer(base.Renderer):
     def flip(self):
         for position in range(self.columns):
             sys.stdout.write(self.pick_closest_color(self.buffer[position]) + ' ')
-            self.buffer[position] = None
 
         print Fore.RESET + Back.RESET + Style.RESET_ALL
 
