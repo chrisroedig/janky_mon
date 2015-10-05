@@ -9,7 +9,7 @@ class Renderer(base.Renderer):
     """
     def __init__(self):
         self.columns = 80
-        self.buffer = [ Back.BLACK ] * self.columns
+        self.buffer = [ None ] * self.columns
 
     @property
     def pixel_count(self):
@@ -20,9 +20,12 @@ class Renderer(base.Renderer):
         return 100
 
     def set_pixel(self, position, rgb):
-        self.buffer[position] = self.pick_closest_color(rgb)
+        self.buffer[position] = rgb
 
     def pick_closest_color(self, rgb):
+        if rgb is None:
+            return Fore.RESET + Back.RESET + Style.RESET_ALL
+
         r, g, b = rgb
         if r == g and g == b:
             if r == self.max_intensity:
@@ -38,9 +41,8 @@ class Renderer(base.Renderer):
 
     def flip(self):
         for position in range(self.columns):
-            sys.stdout.write(self.buffer[position] + ' ')
-            self.buffer[position] = Fore.BLACK
+            sys.stdout.write(self.pick_closest_color(self.buffer[position]) + ' ')
+            self.buffer[position] = None
 
-        print(Fore.RESET + Back.RESET + Style.RESET_ALL)
-
+        print Fore.RESET + Back.RESET + Style.RESET_ALL
 

@@ -15,8 +15,5 @@ class Renderer(object):
 
     def reset(self):
         for position in range(self.pixel_count):
-            self.set_pixel(position, (0, 0, 0))
+            self.set_pixel(position, None)
 
-    def set_all_pixels(self, rgbs):
-        for position in range(self.pixel_count):
-            self.set_pixel(position, rgbs[position])

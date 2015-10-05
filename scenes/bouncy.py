@@ -27,7 +27,7 @@ class Scene(object):
         dot_start, dot_end = (self.position, self.position + self.dot_size)
 
         for i in range(renderer.pixel_count):
-            rgb = (0, 0, 0)
+            rgb = None
             if trail_start <= i <= trail_end:
                 rgb = (0, renderer.max_intensity, 0)
             if dot_start <= i <= dot_end:

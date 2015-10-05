@@ -28,9 +28,9 @@ class Renderer(base.Renderer):
         return self.led_brightness
 
     def set_pixel(self, position, rgb):
+        rgb = (0, 0, 0) if rgb is None
         self.strip.setPixelColorRGB(position, *rgb)
 
     def flip(self):
         self.strip.show()
-
 
