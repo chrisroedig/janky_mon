@@ -29,7 +29,7 @@ class Renderer(base.Renderer):
 
     def set_pixel(self, position, rgb):
         if rgb is None:
-            self.strip.setPixelColorRGB(position, 0,0,0)
+            return self.strip.setPixelColorRGB(position, 0,0,0)
         self.strip.setPixelColorRGB(position, *rgb)
 
     def flip(self):
