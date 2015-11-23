@@ -10,7 +10,7 @@ PUSHER_CLIENT_KEY = '339fb0632e1d5b4e2acf'
 
 PRO_COLOR = (247, 147, 0)
 RETRO_COLOR = (223, 19, 79)
-DECAY_TIME = 30.0
+DECAY_TIME = 10.0
 
 class Scene(object):
     """
