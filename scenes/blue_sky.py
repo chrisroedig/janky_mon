@@ -14,7 +14,7 @@ class Scene(object):
         renderer.set_pixel(i, self.pixel(i))
 
     def pixel(self, i):
-      bleach = 255*BLEACH_AMP*math.sin(2*math.pi*(i+time.time())/60.0)**2
+      bleach = 255*BLEACH_AMP*math.sin(2*math.pi*(i+6*time.time())/60.0)**2
       bleach_c = (bleach, bleach, bleach)
       magnitude = TOTAL_AMPLITUDE/(1.0 + BLEACH_AMP)
       return tuple([int(sum(c)*magnitude) for c in zip(bleach_c, BASE_BLUE)])
