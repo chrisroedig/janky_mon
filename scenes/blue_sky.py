@@ -2,7 +2,7 @@ import time
 import math
 
 BASE_BLUE = (86,133,181)
-BLEACH_AMP = 0.6
+BLEACH_AMP = 1.0
 TOTAL_AMPLITUDE = 0.2
 
 class Scene(object):
