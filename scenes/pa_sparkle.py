@@ -56,6 +56,7 @@ class Scene(object):
              self.add_dot(RETRO_COLOR)
           else:
              self.add_dot(PRO_COLOR)
+          cself.cleanup()
         except Exception as err:
           print err
 
