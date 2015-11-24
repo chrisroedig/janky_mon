@@ -7,10 +7,12 @@ import math
 
 
 PUSHER_CLIENT_KEY = '339fb0632e1d5b4e2acf'
-
 PRO_COLOR = (247, 147, 0)
 RETRO_COLOR = (223, 19, 79)
 DECAY_TIME = 5.0
+PULSE_DELAY = 0.1
+PULSE_LENGTH = 0.1
+
 
 class Scene(object):
     """
@@ -69,13 +71,17 @@ class Scene(object):
     def pixels(self):
         pixel_dots = []
         for dot in self.dots:
-          age = time.time() - dot['time']
-          amp = math.e**(-(age/DECAY_TIME))
+          age = float(time.time() - dot['time'])
+          amp = self.amplitude(age)
           old_c = dot['color']
           new_c = tuple([int(amp*c) for c in old_c])
           pixel_dots.append({'pos':dot['pos'], 'color':new_c})
         return pixel_dots
 
+    def amplitude(self, time):
+         amp = 0.2*math.e**(-((time-PULSE_DELAY)/PULSE_LENGTH)**2.0)
+         amp += 0.8*math.e**(-(time/DECAY_TIME)**3.0)
+         return amp
 
     def render_to(self, renderer, moment):
         for pix in self.pixels:
