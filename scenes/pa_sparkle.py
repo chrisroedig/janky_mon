@@ -45,9 +45,14 @@ class Scene(object):
     def cleanup(self):
         if len(self.dots) <= 0:
             return
-        last_spark = self.dots[0]
-        if time.time() - last_spark['time'] > 20:
+        while self.last_dot.get('expired', False):
           self.dots = self.dots[1:]
+
+    @property
+    def last_dot(self):
+        last = self.dots[0]
+        last['expired'] = (time.time() - last['time']) > 20
+        return last
 
     def new_pa(self, data_str):
         try:
@@ -56,7 +61,7 @@ class Scene(object):
              self.add_dot(RETRO_COLOR)
           else:
              self.add_dot(PRO_COLOR)
-          cself.cleanup()
+          self.cleanup()
         except Exception as err:
           print err
 
@@ -80,9 +85,8 @@ class Scene(object):
 if __name__ == '__main__':
     s= Scene()
     while True:
-        time.sleep(1.0)
-        s.cleanup()
+        time.sleep(0.1)
         print s.pixels
-        print '\n\n'
+        print '\n'
 
 
