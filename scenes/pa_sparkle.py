@@ -10,7 +10,7 @@ PUSHER_CLIENT_KEY = '339fb0632e1d5b4e2acf'
 
 PRO_COLOR = (247, 147, 0)
 RETRO_COLOR = (223, 19, 79)
-DECAY_TIME = 10.0
+DECAY_TIME = 5.0
 
 class Scene(object):
     """
@@ -46,7 +46,7 @@ class Scene(object):
         if len(self.dots) <= 0:
             return
         last_spark = self.dots[0]
-        if time.time() - last_spark['time'] > 90:
+        if time.time() - last_spark['time'] > 20:
           self.dots = self.dots[1:]
 
     def new_pa(self, data_str):
