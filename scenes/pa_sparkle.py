@@ -79,8 +79,8 @@ class Scene(object):
         return pixel_dots
 
     def amplitude(self, time):
-         amp = 0.2*math.e**(-((time-PULSE_DELAY)/PULSE_LENGTH)**2.0)
-         amp += 0.8*math.e**(-(time/DECAY_TIME)**3.0)
+         amp = 0.5*math.e**(-((time-PULSE_DELAY)/PULSE_LENGTH)**2.0)
+         amp += 0.5*math.e**(-(time/DECAY_TIME)**3.0)
          return amp
 
     def render_to(self, renderer, moment):
