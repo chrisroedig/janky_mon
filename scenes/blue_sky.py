@@ -12,7 +12,6 @@ class Scene(object):
     def render_to(self, renderer, moment):
       for i in range(60):
         renderer.set_pixel(i, self.pixel(i))
-        return
 
     def pixel(self, i):
       bleach = 255*BLEACH_AMP*math.sin(2*math.pi*(i+time.time())/60.0)**2
