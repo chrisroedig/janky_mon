@@ -23,7 +23,7 @@ class Scene(object):
         self.pusher_thread = threading.Thread(target=self.connect_to_pusher)
         self.pusher_thread.start()
         self.position = 0
-        threading.Timer(1, cleanup).start()
+        self.cleanup()
 
     def connect_to_pusher(self):
         print 'setting up pusher'
@@ -47,6 +47,7 @@ class Scene(object):
         self.position = (self.position + 1) % 60
 
     def cleanup(self):
+        threading.Timer(1, self.cleanup).start()
         if len(self.dots) <= 0:
             return
         if self.last_dot.get('expired', False):
@@ -57,7 +58,7 @@ class Scene(object):
     @property
     def last_dot(self):
         last = self.dots[0]
-        last['expired'] = (time.time() - last['time']) > 15
+        last['expired'] = (time.time() - last['time']) > 12
         return last
 
     def new_pa(self, data_str):
