@@ -58,7 +58,7 @@ class Scene(object):
     @property
     def last_dot(self):
         last = self.dots[0]
-        last['expired'] = (time.time() - last['time']) > 12
+        last['expired'] = (time.time() - last['time']) > 15
         return last
 
     def new_pa(self, data_str):
