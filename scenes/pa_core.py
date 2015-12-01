@@ -9,7 +9,7 @@ import math
 PUSHER_CLIENT_KEY = '339fb0632e1d5b4e2acf'
 PRO_COLOR = (247, 147, 0)
 RETRO_COLOR = (223, 19, 79)
-PULSE_DELAY = 0.5
+PULSE_DELAY = 0.3
 PULSE_LENGTH = 0.5
 
 
@@ -54,8 +54,8 @@ class Scene(object):
 
     def pixel_pair(self, dot):
         age = time.time() - dot['time']
-        b_pos = int(30*min(age/PULSE_DELAY,1.0))
-        t_pos = int(60-30*min(age/PULSE_DELAY,1.0))
+        b_pos = int(30*min(age/(2.0*PULSE_DELAY),1.0))
+        t_pos = int(60-30*min(age/(2.0*PULSE_DELAY),1.0))
         color = self.pixel_color(dot['color'], dot['time'])
         return [
           dict(dot, color=color, pos=b_pos),
@@ -63,7 +63,7 @@ class Scene(object):
         ]
 
     def pixel_color(self, base_color,time):
-        amp = 0.5+0.5*math.e**(-((time-PULSE_DELAY)/PULSE_LENGTH)**2.0)
+        amp = 0.3+0.7*math.e**(-((time-PULSE_DELAY)/PULSE_LENGTH)**2.0)
         return tuple([int(amp*c) for c in base_color])
 
     @property
