@@ -49,13 +49,16 @@ class Scene(object):
     def cleanup(self):
         if len(self.dots) <= 0:
             return
-        while self.last_dot.get('expired', False):
+        if self.last_dot.get('expired', False):
           self.dots = self.dots[1:]
+        if self.last_dot.get('expired', False):
+          self.dots = self.dots[1:]
+
 
     @property
     def last_dot(self):
         last = self.dots[0]
-        last['expired'] = (time.time() - last['time']) > 15
+        last['expired'] = (time.time() - last['time']) > 10
         return last
 
     def new_pa(self, data_str):
