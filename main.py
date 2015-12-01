@@ -8,6 +8,7 @@ import scenes.klokk as klokk
 import scenes.bouncy as bouncy
 import scenes.composite as composite
 import scenes.pa_sparkle as pa_sparkle
+import scenes.pa_worm as pa_worm
 import scenes.blue_sky as blue_sky
 
 UPDATE_INTERVAL = 0.01
@@ -20,7 +21,7 @@ def run():
     signal.signal(signal.SIGTERM, stop)
 
     global renderer
-    scene = composite.Scene([blue_sky.Scene(), pa_sparkle.Scene()])
+    scene = composite.Scene([blue_sky.Scene(), pa_worm.Scene()])
     renderer = active_renderer.Renderer()
 
     def update_scene():
