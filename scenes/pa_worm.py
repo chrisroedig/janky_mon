@@ -23,6 +23,7 @@ class Scene(object):
         self.pusher_thread = threading.Thread(target=self.connect_to_pusher)
         self.pusher_thread.start()
         self.position = 0
+        threading.Timer(1, cleanup).start()
 
     def connect_to_pusher(self):
         print 'setting up pusher'
@@ -36,7 +37,6 @@ class Scene(object):
         self.pusher_channel = self.pusher_client.subscribe('pa_channel')
         self.pusher_channel.bind('pa_event', self.new_pa)
         print 'pusher subscribed'
-
 
     def add_dot(self,color):
         self.dots.append({
@@ -54,11 +54,10 @@ class Scene(object):
         if self.last_dot.get('expired', False):
           self.dots = self.dots[1:]
 
-
     @property
     def last_dot(self):
         last = self.dots[0]
-        last['expired'] = (time.time() - last['time']) > 10
+        last['expired'] = (time.time() - last['time']) > 15
         return last
 
     def new_pa(self, data_str):
@@ -68,7 +67,6 @@ class Scene(object):
              self.add_dot(RETRO_COLOR)
           else:
              self.add_dot(PRO_COLOR)
-          self.cleanup()
         except Exception as err:
           print err
 
