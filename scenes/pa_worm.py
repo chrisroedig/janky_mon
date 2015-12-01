@@ -47,11 +47,9 @@ class Scene(object):
         self.position = (self.position + 1) % 60
 
     def cleanup(self):
-        threading.Timer(1, self.cleanup).start()
+        threading.Timer(0.25, self.cleanup).start()
         if len(self.dots) <= 0:
             return
-        if self.last_dot.get('expired', False):
-          self.dots = self.dots[1:]
         if self.last_dot.get('expired', False):
           self.dots = self.dots[1:]
 
