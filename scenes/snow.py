@@ -6,7 +6,7 @@ import math
 
 FLAKE_COLOR = (220, 250,255 )
 FALL_RATE = 8.0
-FLAKE_PERIOD = 3.0
+FLAKE_PERIOD = 2.0
 
 class Scene(object):
     """
@@ -18,12 +18,12 @@ class Scene(object):
         self.new_flake()
 
     def new_flake(self):
-        next_flake = FLAKE_PERIOD*(0.5+random.random())
+        next_flake = FLAKE_PERIOD*(0.5+2.0*random.random())
         threading.Timer(next_flake, self.new_flake).start()
         self.dots.append({
           'time': time.time(),
-          'velocity': FALL_RATE,
-          'amp': 1.0-.2*random.random()
+          'velocity': FALL_RATE*(0.5+random.random()),
+          'amp': 1.0-.5*random.random()
           })
 
     def cleanup(self):
