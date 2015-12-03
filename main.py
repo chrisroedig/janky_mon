@@ -11,6 +11,7 @@ import scenes.pa_sparkle as pa_sparkle
 import scenes.pa_worm as pa_worm
 import scenes.pa_core as pa_core
 import scenes.blue_sky as blue_sky
+import scenes.snow as snow
 
 UPDATE_INTERVAL = 0.01
 
@@ -22,7 +23,7 @@ def run():
     signal.signal(signal.SIGTERM, stop)
 
     global renderer
-    scene = composite.Scene([blue_sky.Scene(), pa_worm.Scene()])
+    scene = composite.Scene([blue_sky.Scene(), pa_worm.Scene(), snow.Scene()])
     renderer = active_renderer.Renderer()
 
     def update_scene():
