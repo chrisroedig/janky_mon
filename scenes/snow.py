@@ -2,11 +2,12 @@ import time
 import random
 import threading
 import math
-
+from data import forecastio
 
 FLAKE_COLOR = (220, 250,255 )
-FALL_RATE = 8.0
-FLAKE_PERIOD = 2.0
+FALL_RATE = 6.0
+FLAKE_PERIOD = 8.0
+
 
 class Scene(object):
     """
@@ -17,13 +18,29 @@ class Scene(object):
         self.cleanup()
         self.new_flake()
 
+    @property
+    def next_flake(self):
+        w = forecastio.get_weather()
+        if w.get('currently') is None:
+          return FLAKE_PERIOD
+        prob = float(w['currently']['precipProbability'])
+        return FLAKE_PERIOD*(1.1-prob**2)*(1.0+0.1*random.random())
+
+    @property
+    def fall_rate(self):
+        w = forecastio.get_weather()
+        if w.get('currently') is None:
+          return FALL_RATE
+        intens = float(w['currently']['precipIntensity'])
+        return FALL_RATE*(1.0+intens)*(0.7+0.3*random.random())
+
+
     def new_flake(self):
-        next_flake = FLAKE_PERIOD*(0.5+2.0*random.random())
-        threading.Timer(next_flake, self.new_flake).start()
+        threading.Timer(self.next_flake, self.new_flake).start()
         self.dots.append({
           'time': time.time(),
-          'velocity': FALL_RATE*(0.5+random.random()),
-          'amp': 1.0-.5*random.random()
+          'velocity': self.fall_rate,
+          'amp': 1.0-0.7*random.random()
           })
 
     def cleanup(self):
