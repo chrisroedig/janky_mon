@@ -6,7 +6,7 @@ LNG= '-83.005839'
 API_KEY='077ffff879ddbc16be03caa9d8e4b917'
 
 GLOBAL_DATA = {
-    'current': None,
+    'current': {},
     'last_update': None,
     }
 
@@ -26,5 +26,5 @@ def request_weather():
   url = "https://api.forecast.io/forecast/{}/{},{}".format(API_KEY, LAT, LNG)
   resp = requests.get(url)
   if resp.status_code!= 200:
-    return None
+    return {}
   return resp.json()
