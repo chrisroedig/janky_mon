@@ -23,7 +23,7 @@ def update_weather():
     GLOBAL_DATA['last_update'] = time.time()
 
 def request_weather():
-  url = "https://api.forecast.io/forecast/{}/{},{}".format(API_KEY, LAT, LNG)
+  url = "https://darksky.net/forecast/{}/{},{}".format(API_KEY, LAT, LNG)
   resp = requests.get(url)
   if resp.status_code!= 200:
     return {}
