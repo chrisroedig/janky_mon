@@ -77,7 +77,7 @@ class Scene(object):
           amp = self.amplitude(age)
           old_c = dot['color']
           new_c = tuple([int(amp*c) for c in old_c])
-          pixel_dots.append({'pos':pos, 'color':new_c})
+          pixel_dots.append({'pos':(59-pos), 'color':new_c})
         return pixel_dots
 
     def amplitude(self, time):
