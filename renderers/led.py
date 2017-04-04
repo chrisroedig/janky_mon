@@ -11,7 +11,7 @@ class Renderer(base.Renderer):
             led_pin        = 18,      # GPIO pin connected to the pixels (must support PWM!).
             led_freq_hz    = 800000,  # LED signal frequency in hertz (usually 800khz)
             led_dma        = 5,       # DMA channel to use for generating signal (try 5)
-            led_brightness = 128,     # Set to 0 for darkest and 255 for brightest
+            led_brightness = 255,     # Set to 0 for darkest and 255 for brightest
             led_invert     = False,   # True to invert the signal (when using NPN transistor level shift)
             period         = 3*10*1000*1000):
         self.led_count = led_count

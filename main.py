@@ -9,7 +9,7 @@ import scenes.klokk as klokk
 import scenes.bouncy as bouncy
 import scenes.composite as composite
 import scenes.pa_sparkle as pa_sparkle
-# import scenes.pa_worm as pa_worm
+import scenes.pa_snow as pa_snow
 import scenes.pa_meter as pa_meter
 import scenes.pa_core as pa_core
 import scenes.blue_sky as blue_sky
@@ -25,7 +25,7 @@ def run():
     signal.signal(signal.SIGTERM, stop)
 
     global renderer
-    scene = composite.Scene([blue_sky.Scene(),snow.Scene(), pa_meter.Scene()])
+    scene = composite.Scene([blue_sky.Scene(), snow.Scene(), pa_snow.Scene()])
     renderer = active_renderer.Renderer()
 
     def update_scene():
