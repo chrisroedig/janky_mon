@@ -24,7 +24,7 @@ def run():
     signal.signal(signal.SIGTERM, stop)
 
     global renderer
-    scene = composite.Scene([blue_sky.Scene(), pa_meter.Scene()])
+    scene = composite.Scene([blue_sky.Scene(), pa_sparkle.Scene()])
     renderer = active_renderer.Renderer()
 
     def update_scene():
