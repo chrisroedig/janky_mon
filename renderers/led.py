@@ -30,7 +30,8 @@ class Renderer(base.Renderer):
     def set_pixel(self, position, rgb):
         if rgb is None:
             return self.strip.setPixelColorRGB(position, 0,0,0)
-        self.strip.setPixelColorRGB(position, *rgb)
+        # for some reason the newest version of the underlying NEOPIXEL library expects GRB instead of RGB
+        self.strip.setPixelColorRGB(position, rgb[1], rgb[0], rgb[2])
 
     def flip(self):
         self.strip.show()
