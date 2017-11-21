@@ -13,6 +13,7 @@ import scenes.pa_meter as pa_meter
 import scenes.pa_core as pa_core
 import scenes.blue_sky as blue_sky
 import scenes.snow as snow
+import scenes.hipflash as hipflash
 
 UPDATE_INTERVAL = 0.01
 
@@ -24,7 +25,7 @@ def run():
     signal.signal(signal.SIGTERM, stop)
 
     global renderer
-    scene = composite.Scene([blue_sky.Scene(), pa_sparkle.Scene()])
+    scene = composite.Scene([blue_sky.Scene(), pa_sparkle.Scene(), hipflash.Scene()])
     renderer = active_renderer.Renderer()
 
     def update_scene():
